@@ -32,6 +32,24 @@ class Course {
     }
   }
 };
+class Comment {
+  constructor({
+    content,
+    studentName, 
+    studentrRole = 'estudiante',
+  }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.studentrRole = studentrRole;
+    this.likes = 0;
+  }
+
+  publish() {
+    console.log(this.studentName + " (" + this.studentrRole + ")");
+    console.log(this.likes + " likes");
+    console.log(this.content  );
+  }
+}
 class Student {
   constructor({
     name,
@@ -54,6 +72,14 @@ class Student {
       facebook,
     };
   };
+
+  publishComment(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+    });
+    comment.publish();
+  }
 };
 class ClassForCourse {
   constructor({
@@ -134,9 +160,26 @@ class ExpertStudent extends Student {
     this.approvedCourses.push(newCourse);
   };
 }
+class TeacherStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
 
+  approveCourse(newCourse) {
+    this.approvedCourses.push(newCourse);
+  };
 
+  publishComment(commentContent) {
+    const comment = new Comment({
+     content: commentContent,
+     studentName: this.name,
+     studentrRole: 'profesor'
+   });
+   comment.publish();
+ }
+}
 
+// functions
 function videoPlay(id) {
   const secretUrl = 'https://www.google.com/';
   console.log('Se reproduce desde la url' + secretUrl);
@@ -238,7 +281,12 @@ const felipe = new BasicStudent({
   twitter: 'Jaya__9',
   learningPaths: [ webDevelopmentCollege, exclusiveCoursesCollege ],
 })
-
+const freddy = new TeacherStudent({
+  name: 'Freddy Vega',
+  username: 'freddier',
+  email: 'freddy@mail.com',
+  instagram: 'freddiervega',
+})
 
 
 
